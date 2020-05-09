@@ -21,6 +21,12 @@
         <Icon type="ios-locked-outline" slot="prepend"></Icon>
         </Input>
       </FormItem>
+      <FormItem prop="classNum">
+<!--        todo 班级号-->
+        <Input v-model="formRegister.classNum" :placeholder="$t('m.ClassNum')" size="large" @on-enter="handleRegister">
+        <Icon type="ios-people-outline" slot="prepend"></Icon>
+        </Input>
+      </FormItem>
       <FormItem prop="captcha" style="margin-bottom:10px">
         <div class="oj-captcha">
           <div class="oj-captcha-code">
@@ -105,6 +111,7 @@
           password: '',
           passwordAgain: '',
           email: '',
+          classNum: '',
           captcha: ''
         },
         ruleRegister: {

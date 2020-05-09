@@ -91,6 +91,7 @@ export const m = {
   Source: '来源',
   Edit_Problem: '编辑问题',
   Add_Problem: '添加问题',
+  NONE: '无',
   High: '高',
   Mid: '中',
   Low: '低',

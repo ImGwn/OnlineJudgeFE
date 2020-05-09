@@ -66,16 +66,19 @@
     <Form ref="formProfile" :model="formProfile">
       <Row type="flex" :gutter="30" justify="space-around">
         <Col :span="11">
-          <FormItem label="Real Name">
+          <FormItem label="真实姓名">
             <Input v-model="formProfile.real_name"/>
           </FormItem>
-          <Form-item label="School">
-            <Input v-model="formProfile.school"/>
-          </Form-item>
-          <Form-item label="Major">
+<!--          <Form-item label="学校">-->
+<!--            <Input v-model="formProfile.school"/>-->
+<!--          </Form-item>-->
+          <Form-item label="专业">
             <Input v-model="formProfile.major"/>
           </Form-item>
-          <FormItem label="Language">
+          <Form-item label="班级号">
+            <Input v-model="formProfile.classNum"/>
+          </Form-item>
+          <FormItem label="语言选择">
             <Select v-model="formProfile.language">
               <Option v-for="lang in languages" :key="lang.value" :value="lang.value">{{lang.label}}</Option>
             </Select>
@@ -86,7 +89,7 @@
         </Col>
 
         <Col :span="11">
-          <Form-item label="Mood">
+          <Form-item label="心情">
             <Input v-model="formProfile.mood"/>
           </Form-item>
           <Form-item label="Blog">
@@ -129,6 +132,7 @@
           real_name: '',
           mood: '',
           major: '',
+          classNum: '',
           blog: '',
           school: '',
           github: '',
@@ -234,7 +238,22 @@
         }, _ => {
           this.loadingSaveBtn = false
         })
+        console.log(updateData)
+        if (this.formProfile.classNum) { // add todo
+          console.log('classNum have')
+          let data = {}
+          Object.assign(data, this.formProfile.classNum)
+          api.changeClassNum(this.formProfile.classNum).then(res => {
+            console.log('Change classNum successfully')
+          })
+        }
       }
+      // changeClassNum () {
+      //   let data = Object.assign({}, this.formProfile.classNum)
+      //   api.changeEmail(data).then(res => {
+      //     console.log('Change classNum successfully')
+      //   })
+      // }
     },
     computed: {
       previewStyle () {

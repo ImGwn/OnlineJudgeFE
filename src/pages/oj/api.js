@@ -108,6 +108,13 @@ export default {
       data
     })
   },
+  changeClassNum (classNum) {
+    return ajax('change_class_num', 'post', {
+      data: {
+        classNum
+      }
+    })
+  },
   getLanguages () {
     return ajax('languages', 'get')
   },
@@ -127,6 +134,18 @@ export default {
     })
     return ajax('problem', 'get', {
       params: params
+    })
+  },
+  // added todo
+  getTagProblems (tagName) {
+    return ajax('problem', 'get', {
+      params: {
+        paging: true,
+        offset: 0,
+        limit: 20,
+        tag: tagName,
+        pages: 1
+      }
     })
   },
   pickone () {

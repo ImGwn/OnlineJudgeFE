@@ -1,7 +1,11 @@
 <template>
   <div id="header">
+
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
-      <div class="logo"><span>{{website.website_name}}</span></div>
+      <!--<div class="logo"><span>{{website.website_name}}</span></div> -->
+      <div class="just-logo">
+        <img src="../../../assets/just.png" height="60">
+      </div>
       <Menu-item name="/">
         <Icon type="home"></Icon>
         {{$t('m.Home')}}
@@ -90,6 +94,7 @@
       login,
       register
     },
+
     mounted () {
       this.getProfile()
     },
@@ -142,12 +147,22 @@
       background: #fdfdfd;
     }
 
-    .logo {
-      margin-left: 2%;
-      margin-right: 2%;
-      font-size: 20px;
+    //.logo {
+      margin-left: 1%;
+      margin-right: 1%;
+      //font-size: 20px;
       float: left;
-      line-height: 60px;
+      //line-height: 60px;
+      height: 60px;
+   // }
+
+    .just-logo {
+      margin-left: 1%;
+      margin-right: 1%;
+      //font-size: 20px;
+      float: left;
+      //line-height: 60px;
+      height: 60px;
     }
 
     .drop-menu {
@@ -162,7 +177,7 @@
     .btn-menu {
       font-size: 16px;
       float: right;
-      margin-right: 10px;
+      margin-right: 30px;
     }
   }
 

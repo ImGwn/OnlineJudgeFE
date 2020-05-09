@@ -84,6 +84,7 @@ export const m = {
   // Register.vue
   RegisterUsername: '使用者名稱',
   Email_Address: 'E-mail',
+  ClassNum: '班级号',
   RegisterPassword: '密碼',
   Password_Again: '確認密碼',
   Captcha: '驗證碼',

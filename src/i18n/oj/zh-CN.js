@@ -206,6 +206,7 @@ export const m = {
   // Register.vue
   RegisterUsername: '用户名',
   Email_Address: '电子邮箱',
+  ClassNum: '班级号',
   RegisterPassword: '密码',
   Password_Again: '确认密码',
   Captcha: '验证码',

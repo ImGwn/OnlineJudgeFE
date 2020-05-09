@@ -41,7 +41,7 @@
       </div>
       <Table style="width: 100%; font-size: 16px;"
              :columns="problemTableColumns"
-             :data="problemList"
+             :data="problemListAll"
              :loading="loadings.table"
              disabled-hover></Table>
     </Panel>
@@ -52,6 +52,11 @@
     <Col :span="5">
     <Panel :padding="10">
       <div slot="title" class="taglist-title">{{$t('m.Tags')}}</div>
+      <Button long id="pick-one" @click="pickone">
+        <Icon type="shuffle"></Icon>
+        {{$t('m.Pick_One')}}
+      </Button>
+
       <Button v-for="tag in tagList"
               :key="tag.name"
               @click="filterByTag(tag.name)"
@@ -59,11 +64,6 @@
               :disabled="query.tag === tag.name"
               shape="circle"
               class="tag-btn">{{tag.name}}
-      </Button>
-
-      <Button long id="pick-one" @click="pickone">
-        <Icon type="shuffle"></Icon>
-        {{$t('m.Pick_One')}}
       </Button>
     </Panel>
     <Spin v-if="loadings.tag" fix size="large"></Spin>
@@ -120,7 +120,11 @@
                 },
                 on: {
                   click: () => {
-                    this.$router.push({name: 'problem-details', params: {problemID: params.row._id}})
+                    if (params.row.isTitle) {
+                      console.log('pass')
+                    } else {
+                      this.$router.push({name: 'problem-details', params: {problemID: params.row._id}})
+                    }
                   }
                 },
                 style: {
@@ -139,6 +143,7 @@
               let color = 'blue'
               if (t === 'Low') color = 'green'
               else if (t === 'High') color = 'yellow'
+              else if (t === 'NONE') color = 'white'  // added
               return h('Tag', {
                 props: {
                   color: color
@@ -153,11 +158,19 @@
           {
             title: this.$i18n.t('m.AC_Rate'),
             render: (h, params) => {
+              if (params.row.isTitle) {
+                return h('span', {
+                  props: {
+                    color: 'white'
+                  }
+                })
+              }
               return h('span', this.getACRate(params.row.accepted_number, params.row.submission_number))
             }
           }
         ],
         problemList: [],
+        problemListAll: [], // added todo
         limit: 20,
         total: 0,
         loadings: {
@@ -170,7 +183,8 @@
           difficulty: '',
           tag: '',
           page: 1
-        }
+        },
+        divideFlag: true
       }
     },
     mounted () {
@@ -198,13 +212,57 @@
           query: utils.filterEmptyValue(this.query)
         })
       },
+      // added todo
+      divideByTags (problems, tags) {
+        this.problemListAll = []
+        if (this.query.tag) {
+          tags = [{'name': this.query.tag}]
+        }
+        for (let i = 0; i < tags.length; i++) {
+          var times = 0
+          for (let j = 0; j < problems.length; j++) {
+            for (let k = 0; k < problems[j].tags.length; k++) {
+              let flag = false
+              if (problems[j].tags[k] === tags[i].name) {
+                if (times === 0) {
+                  this.problemListAll.push({'title': tags[i].name, 'difficulty': 'NONE', 'tags': [tags[i].name], 'isTitle': true})
+                }
+                times++
+                flag = true
+              }
+              if (flag) {
+                this.problemListAll.push(problems[j])
+                break
+              }
+            }
+          }
+        }
+        console.log(this.problemListAll)
+      },
+      // getProblemList () {
+      //   let offset = (this.query.page - 1) * this.limit
+      //   this.loadings.table = true
+      //   api.getProblemList(offset, this.limit, this.query).then(res => {
+      //     this.loadings.table = false
+      //     this.total = res.data.data.total
+      //     // this.problemList = res.data.data.results
+      //     // this.divideByTags(res.data.data.results, this.tagList)
+      //     if (this.isAuthenticated) {
+      //       this.addStatusColumn(this.problemTableColumns, res.data.data.results)
+      //     }
+      //   }, res => {
+      //     this.loadings.table = false
+      //   })
+      // },
       getProblemList () {
         let offset = (this.query.page - 1) * this.limit
         this.loadings.table = true
         api.getProblemList(offset, this.limit, this.query).then(res => {
           this.loadings.table = false
           this.total = res.data.data.total
-          this.problemList = res.data.data.results
+          // this.problemListAll = res.data.data.results
+          this.divideByTags(res.data.data.results, this.tagList)
+          // console.log(res.data.data)   // added todo
           if (this.isAuthenticated) {
             this.addStatusColumn(this.problemTableColumns, res.data.data.results)
           }
@@ -212,9 +270,25 @@
           this.loadings.table = false
         })
       },
+      // divideByGetTags (tags) {
+      //   this.problemListAll = []
+      //   for (let i = 0; i < tags.length && this.divideFlag; i++) {
+      //     console.log(this.tagList.length)
+      //     this.problemListAll.push({'title': tags[i].name, 'difficulty': 'NONE', 'tags': [tags[i].name], 'isTitle': true})
+      //     api.getTagProblems(tags[i].name).then(res => {
+      //       console.log(res)
+      //       for (let j = 0; j < res.data.data.results.length; j++) {
+      //         this.problemListAll.push(res.data.data.results[j])
+      //       }
+      //     })
+      //   }
+      //   // this.divideFlag = false
+      // },
       getTagList () {
         api.getProblemTagList().then(res => {
           this.tagList = res.data.data
+          // console.log('problem')
+          // console.log(this.tagList)   // added todo
           this.loadings.tag = false
         }, res => {
           this.loadings.tag = false
@@ -296,6 +370,7 @@
   }
 
   #pick-one {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
+    margin-bottom: 10px;
   }
 </style>

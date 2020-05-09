@@ -206,6 +206,7 @@ export const m = {
   // Register.vue
   RegisterUsername: 'Username',
   Email_Address: 'Email Address',
+  ClassNum: 'ClassNum',
   RegisterPassword: 'Password',
   Password_Again: 'Password Again',
   Captcha: 'Captcha',

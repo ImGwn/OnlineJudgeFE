@@ -41,6 +41,12 @@
 
         <el-table-column prop="real_name" label="Real Name"></el-table-column>
 
+        <el-table-column prop="classNum" :label="$t('m.ClassNum')">
+          <template slot-scope="scope">
+            {{ scope.row.classNum }}
+          </template>
+        </el-table-column>  <!--        add todo-->
+
         <el-table-column prop="email" label="Email"></el-table-column>
 
         <el-table-column prop="admin_type" label="User Type">
