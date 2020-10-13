@@ -130,6 +130,8 @@ export const m = {
   Ended: 'Ended',
   No_contest: 'No contest',
   Please_login_first: 'Please login first!',
+  Visible: 'Visible',
+  Operation: 'Operation',
   // ContestProblemList
   Problems_List: 'Problems List',
   No_Problems: 'No Problems',

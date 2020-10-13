@@ -56,7 +56,7 @@
         </el-pagination>
       </div>
     </panel>
-    <panel title="Import QDUOJ Problems (beta)">
+    <panel title="Import QDUOJ Problems ">
       <el-upload
         ref="QDU"
         action="/api/admin/import_problem"

@@ -29,17 +29,25 @@
         </el-table-column>
         <el-table-column
           prop="title"
-          label="Title">
+          :label="$t('m.ContestTitle')">
         </el-table-column>
         <el-table-column
-          label="Rule Type"
+          prop="course_num"
+          :label="$t('m.Course_Num')">
+        </el-table-column>
+        <el-table-column
+          prop="teacher"
+          :label="$t('m.Teacher')">
+        </el-table-column>
+        <el-table-column
+          :label="$t('m.Rule')"
           width="130">
           <template slot-scope="scope">
             <el-tag type="gray">{{scope.row.rule_type}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
-          label="Contest Type"
+          :label="$t('m.ContestType')"
           width="180">
           <template slot-scope="scope">
             <el-tag :type="scope.row.contest_type === 'Public' ? 'success' : 'primary'">
@@ -48,7 +56,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="Status"
+          :label="$t('m.Status')"
           width="130">
           <template slot-scope="scope">
             <el-tag
@@ -59,7 +67,7 @@
         </el-table-column>
         <el-table-column
           width="100"
-          label="Visible">
+          :label="$t('m.Visible')">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.visible"
                        active-text=""
@@ -71,7 +79,7 @@
         <el-table-column
           fixed="right"
           width="250"
-          label="Operation">
+          :label="$t('m.Operation')">
           <div slot-scope="scope">
             <icon-btn name="Edit" icon="edit" @click.native="goEdit(scope.row.id)"></icon-btn>
             <icon-btn name="Problem" icon="list-ol" @click.native="goContestProblemList(scope.row.id)"></icon-btn>

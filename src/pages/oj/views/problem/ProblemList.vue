@@ -41,7 +41,7 @@
       </div>
       <Table style="width: 100%; font-size: 16px;"
              :columns="problemTableColumns"
-             :data="problemListAll"
+             :data="problemList"
              :loading="loadings.table"
              disabled-hover></Table>
     </Panel>
@@ -260,8 +260,8 @@
         api.getProblemList(offset, this.limit, this.query).then(res => {
           this.loadings.table = false
           this.total = res.data.data.total
-          // this.problemListAll = res.data.data.results
-          this.divideByTags(res.data.data.results, this.tagList)
+          this.problemList = res.data.data.results
+          // this.divideByTags(res.data.data.results, this.tagList)
           // console.log(res.data.data)   // added todo
           if (this.isAuthenticated) {
             this.addStatusColumn(this.problemTableColumns, res.data.data.results)

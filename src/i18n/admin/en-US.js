@@ -110,6 +110,9 @@ export const m = {
   Contest_Status: 'Status',
   Allowed_IP_Ranges: 'Allowed IP Ranges',
   CIDR_Network: 'CIDR Network',
+  Course_Whether: 'Course_Whether',
+  Course_Num: 'Course_Number',
+  Teacher: 'Teacher',
   // Dashboard.vue
   Last_Login: 'Last Login',
   System_Overview: 'System Overview',

@@ -3,17 +3,22 @@
     <Panel :title="title">
       <el-form label-position="top">
         <el-row :gutter="20">
-          <el-col :span="24">
+          <el-col :span="8">
             <el-form-item :label="$t('m.ContestTitle')" required>
               <el-input v-model="contest.title" :placeholder="$t('m.ContestTitle')"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item :label="$t('m.ContestDescription')" required>
-              <Simditor v-model="contest.description"></Simditor>
+          <el-col :span="8">
+            <el-form-item :label="$t('m.Course_Num')" :rules="{required:contest.course}">
+              <el-input v-model="contest.course_num" :placeholder="$t('m.Course_Num')" :disabled="!contest.course"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
+            <el-form-item :label="$t('m.Teacher')" :rules="{required:contest.course}">
+              <el-input v-model="contest.teacher" :placeholder="$t('m.Teacher')" :disabled="!contest.course"></el-input>
+            </el-form-item>
+          </el-col>
+           <el-col :span="8">
             <el-form-item :label="$t('m.Contest_Start_Time')" required>
               <el-date-picker
                 v-model="contest.start_time"
@@ -36,13 +41,13 @@
               <el-input v-model="contest.password" :placeholder="$t('m.Contest_Password')"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item :label="$t('m.Contest_Rule_Type')">
               <el-radio class="radio" v-model="contest.rule_type" label="ACM" :disabled="disableRuleType">ACM</el-radio>
               <el-radio class="radio" v-model="contest.rule_type" label="OI" :disabled="disableRuleType">OI</el-radio>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item :label="$t('m.Real_Time_Rank')">
               <el-switch
                 v-model="contest.real_time_rank"
@@ -51,7 +56,7 @@
               </el-switch>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item :label="$t('m.Contest_Status')">
               <el-switch
                 v-model="contest.visible"
@@ -60,6 +65,22 @@
               </el-switch>
             </el-form-item>
           </el-col>
+          <el-col :span="6">
+            <el-form-item :label="$t('m.Course_Whether')">
+              <el-switch
+                v-model="contest.course"
+                active-text=""
+                inactive-text="">
+              </el-switch>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item :label="$t('m.ContestDescription')" required>
+              <Simditor v-model="contest.description"></Simditor>
+            </el-form-item>
+          </el-col>
+
           <el-col :span="24">
             <el-form-item :label="$t('m.Allowed_IP_Ranges')">
               <div v-for="(range, index) in contest.allowed_ip_ranges" :key="index">
@@ -106,7 +127,10 @@
           visible: true,
           allowed_ip_ranges: [{
             value: ''
-          }]
+          }],
+          course: false,
+          course_num: '',
+          teacher: ''
         }
       }
     },

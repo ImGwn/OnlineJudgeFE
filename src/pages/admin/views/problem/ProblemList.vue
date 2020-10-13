@@ -14,6 +14,7 @@
         ref="table"
         :data="problemList"
         @row-dblclick="handleDblclick"
+        :default-sort = "{prop: '_id', order: 'ascending'}"
         style="width: 100%">
         <el-table-column
           width="100"
@@ -22,6 +23,7 @@
         </el-table-column>
         <el-table-column
           width="150"
+          prop="_id"
           label="Display ID">
           <template slot-scope="{row}">
             <span v-show="!row.isEditing">{{row._id}}</span>
@@ -124,8 +126,9 @@
   import api from '../../api.js'
   import utils from '@/utils/utils'
   import AddProblemComponent from './AddPublicProblem.vue'
+  import Sortable from 'sortablejs'
 
-  export default {
+export default {
     name: 'ProblemList',
     components: {
       AddProblemComponent
@@ -152,6 +155,7 @@
       this.routeName = this.$route.name
       this.contestId = this.$route.params.contestId
       this.getProblemList(this.currentPage)
+      this.tableDrag()  // add
     },
     methods: {
       handleDblclick (row) {
@@ -215,7 +219,7 @@
         })
       },
       updateProblem (row) {
-        let data = Object.assign({}, row)
+        let data = Object.assign({}, row, {'is_drag': false})
         let funcName = ''
         if (this.contestId) {
           data.contest_id = this.contestId
@@ -240,6 +244,38 @@
       },
       getPublicProblem () {
         api.getProblemList()
+      },
+      // add
+      updateDragProblem (row) {
+        let data = Object.assign({}, row, {'is_drag': true})
+        let funcName = ''
+        if (this.contestId) {
+          data.contest_id = this.contestId
+          funcName = 'editContestProblem'
+        } else {
+          funcName = 'editProblem'
+        }
+        api[funcName](data).then(res => {
+          this.InlineEditDialogVisible = false
+          this.getProblemList(this.currentPage)
+        }).catch(() => {
+          this.InlineEditDialogVisible = false
+        })
+      },
+      tableDrag () {
+        const tbody = document.querySelector('.el-table__body-wrapper tbody')
+        // const _this = this
+        Sortable.create(tbody, {
+          onEnd: evt => {
+            this.problemList = this.$refs.table.tableData
+            let temp = ''
+            temp = this.problemList[evt.oldIndex]._id
+            this.problemList[evt.oldIndex]._id = this.problemList[evt.newIndex]._id
+            this.problemList[evt.newIndex]._id = temp
+            this.updateDragProblem(this.problemList[evt.oldIndex])
+            this.updateDragProblem(this.problemList[evt.newIndex])
+          }
+        })
       }
     },
     watch: {

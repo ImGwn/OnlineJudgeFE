@@ -130,6 +130,8 @@ export const m = {
   Ended: '已结束',
   No_contest: '尚无练习或比赛',
   Please_login_first: '请先登录！',
+  Visible: '是否可见',
+  Operation: '操作',
   // ContestProblemList.vue
   Problems_List: '问题列表',
   No_Problems: '尚无问题',

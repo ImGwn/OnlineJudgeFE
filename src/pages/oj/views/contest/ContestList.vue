@@ -50,6 +50,15 @@
                 <Icon type="ios-locked-outline" size="20"></Icon>
               </template>
             </p>
+            <ul class="course_detail" v-if="contest.course_num != null || contest.teacher != null">
+              <li>
+                {{$t('m.Course_Num')+":" +contest.course_num }}
+              </li>
+              <li>
+                <Icon type="ios-contact" color="#3091f2"></Icon>
+                {{contest.teacher}}
+              </li>
+            </ul>
             <ul class="detail">
               <li>
                 <Icon type="calendar" color="#3091f2"></Icon>
