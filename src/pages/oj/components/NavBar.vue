@@ -2,8 +2,7 @@
   <div id="header">
 
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
-      <!--<div class="logo"><span>{{website.website_name}}</span></div> -->
-      <div class="just-logo">
+      <div class="logo">
         <img src="../../../assets/just.png" height="60">
       </div>
       <Menu-item name="/">
@@ -147,16 +146,8 @@
       background: #fdfdfd;
     }
 
-    //.logo {
-      margin-left: 1%;
-      margin-right: 1%;
-      //font-size: 20px;
-      float: left;
-      //line-height: 60px;
-      height: 60px;
-   // }
 
-    .just-logo {
+    .logo {
       margin-left: 1%;
       margin-right: 1%;
       //font-size: 20px;
